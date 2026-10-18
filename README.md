@@ -9,14 +9,11 @@ O Maven Wrapper distribui Maven 3.10.0. No Windows, execute `./mvnw.cmd clean ve
 
 ## Desenvolvimento local
 
-Ative o perfil `local` e mantenha todas as credenciais fora do repositório:
+Copie `.env.example` para `.env`, informe somente a senha local e inicie diretamente pelo Maven Wrapper. O `.env` é ignorado pelo Git e carregado pelo Spring Boot apenas quando presente no diretório de execução:
 
 ```powershell
-$env:SPRING_PROFILES_ACTIVE = 'local'
-$env:GLICOPONTO_DB_URL = 'jdbc:postgresql://localhost:5432/glicoponto'
-$env:GLICOPONTO_DB_USERNAME = 'glicoponto'
-$env:GLICOPONTO_DB_PASSWORD = '<senha-local>'
-./mvnw.cmd spring-boot:run
+Copy-Item .env.example .env
+.\mvnw.cmd spring-boot:run "-Dspring-boot.run.profiles=local"
 ```
 
 O Hibernate somente valida o schema (`ddl-auto=validate`) e o Flyway é responsável por migrations. Ainda não existem migrations ou tabelas de domínio nesta fundação; o Flyway cria apenas seu histórico de infraestrutura ao conectar a um banco vazio.
