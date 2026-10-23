@@ -1,4 +1,4 @@
-package br.com.glicoponto;
+package br.com.glicemio;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,11 +11,12 @@ import org.springframework.test.web.servlet.MockMvc;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.httpBasic;
 
 @SpringBootTest(webEnvironment = WebEnvironment.MOCK)
 @AutoConfigureMockMvc
 @Import(TestcontainersConfiguration.class)
-class GlicopontoBackendApplicationTests {
+class GlicemioBackendApplicationTests {
 
 	@Autowired
 	private MockMvc mockMvc;
@@ -34,6 +35,12 @@ class GlicopontoBackendApplicationTests {
 	@Test
 	void nonPublicRoutesRequireAuthentication() throws Exception {
 		mockMvc.perform(get("/"))
+			.andExpect(status().isUnauthorized());
+	}
+
+	@Test
+	void httpBasicCredentialsAreNotAccepted() throws Exception {
+		mockMvc.perform(get("/").with(httpBasic("user", "password")))
 			.andExpect(status().isUnauthorized());
 	}
 

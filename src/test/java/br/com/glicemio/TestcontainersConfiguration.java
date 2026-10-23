@@ -1,4 +1,4 @@
-package br.com.glicoponto;
+package br.com.glicemio;
 
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.testcontainers.service.connection.ServiceConnection;
